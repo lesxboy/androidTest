@@ -9,8 +9,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.mydemoapplication.data.remote.respones.Result
-
 
 @Composable
 fun ListScreen(
@@ -23,7 +21,7 @@ fun ListScreen(
     ) {
         Column {
             Spacer(modifier = Modifier.height(16.dp))
-            CharacterListView(
+            CharacterList(
                 list = viewModel.characterList.value
             )
         }
@@ -31,7 +29,7 @@ fun ListScreen(
 }
 
 @Composable
-fun CharacterListView(
+fun CharacterList(
     list: List<ListEntry>,
     modifier: Modifier = Modifier
 ) {
