@@ -14,7 +14,7 @@ class MyRepository @Inject constructor(
         val response = try {
             api.fetchCharters()
         } catch(e: Exception) {
-            return Resource.Error("An error")
+            return Resource.Error("An error ${e.localizedMessage} ")
         }
         return Resource.Success(response)
     }

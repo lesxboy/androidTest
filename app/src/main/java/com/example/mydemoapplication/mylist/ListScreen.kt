@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.mydemoapplication.data.remote.respones.Result
 
 
 @Composable
@@ -36,8 +37,7 @@ fun CharacterListView(
 ) {
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         list.forEach { category ->
-            println(category.name)
-            /*CategoryItem(
+            /*ListItem(
                 text = category.name,
                 modifier = modifier
             )*/
@@ -47,7 +47,7 @@ fun CharacterListView(
 
 
 @Composable
-fun CategoryItem(
+fun ListItem(
     text: String,
     modifier: Modifier = Modifier
 ) {

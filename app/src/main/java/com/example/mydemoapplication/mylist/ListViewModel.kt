@@ -55,26 +55,3 @@ class ListViewModel @Inject constructor(
 data class ListEntry(
     val name: String
 )
-
-data class Category(
-    val name: String,
-)
-
-@Composable
-private fun CategorizedLazyColumn(
-    categories: List<Result>,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(
-        modifier = modifier
-    ) {
-        categories.forEach { category ->
-            /*stickyHeader {
-                //CategoryHeader(category.name)
-            }
-            items(category.items) { text ->
-               // CategoryItem(text)
-            }*/
-        }
-    }
-}
