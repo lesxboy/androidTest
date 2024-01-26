@@ -1,10 +1,8 @@
 package com.example.mydemoapplication.mylist
-
-
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import com.example.mydemoapplication.navigation.NavigationObj
 import com.example.mydemoapplication.repository.MyRepository
 import com.example.mydemoapplication.util.Resource
 
@@ -15,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val repository: MyRepository
+    private val repository: MyRepository,
+    private val navigator: NavigationObj
 ) : ViewModel() {
     var characterList = mutableStateOf<List<ListEntry>>(listOf())
     var loadError = mutableStateOf("")
@@ -57,8 +56,8 @@ class ListViewModel @Inject constructor(
     }
 
     private fun fetchCharacters() {
+        _isLoading.value = true
         viewModelScope.launch {
-            _isLoading.value = true
             when(val result = repository.getCharacterList()) {
                 is Resource.Success -> {
                     val entries = result.data?.results?.mapIndexed { index, entry ->
@@ -78,7 +77,7 @@ class ListViewModel @Inject constructor(
     }
 }
 
-data class ListEntry(
+data class ListEntry (
     val name: String){
     fun doesMatchSearchQuery(query: String): Boolean {
         return name.lowercase().contains(query.lowercase())

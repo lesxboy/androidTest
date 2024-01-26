@@ -1,6 +1,6 @@
 package com.example.mydemoapplication.data.remote.respones
 
-data class Result(
+data class CharResult(
     val created: String,
     val episode: List<String>,
     val gender: String,

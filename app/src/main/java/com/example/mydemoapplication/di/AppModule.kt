@@ -1,6 +1,7 @@
 package com.example.mydemoapplication.di
 
 import com.example.mydemoapplication.data.remote.MyApi
+import com.example.mydemoapplication.navigation.NavigationObj
 import com.example.mydemoapplication.repository.MyRepository
 import com.example.mydemoapplication.util.Constants.BASE_URL
 import dagger.Module
@@ -27,4 +28,8 @@ object AppModule {
     @Provides
     @Singleton
     fun providesMyRepository(api: MyApi) = MyRepository(api)
+
+    @Provides
+    @Singleton
+    fun providesNavigatoObj() = NavigationObj
 }

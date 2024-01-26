@@ -1,5 +1,6 @@
 package com.example.mydemoapplication.mylist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,11 +10,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
 @Composable
-fun ListScreen() {
+fun ListScreen(navController: NavController) {
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
@@ -47,15 +51,25 @@ fun ListScreen() {
                         .weight(1f)
                 ) {
                     items(characters) { character ->
-                        Text(
-                            text = character.name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp)
-                        )
+                        CharacterRow(character = character, onItemClick = { test ->
+                            println(test.name)
+                            // Handle item click
+                        })
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CharacterRow(character: ListEntry, onItemClick: (ListEntry) -> Unit) {
+    Box(
+        modifier = Modifier
+            .clickable { onItemClick(character) }
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(text = character.name, fontSize = 18.sp, fontWeight = FontWeight.Medium)
     }
 }
