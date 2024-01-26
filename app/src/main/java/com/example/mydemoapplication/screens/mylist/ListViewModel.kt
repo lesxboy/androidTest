@@ -15,7 +15,6 @@ import javax.inject.Inject
 class ListViewModel @Inject constructor(
     private val repository: MyRepository,
 ) : ViewModel() {
-    //var characterList = mutableStateOf<List<ListEntry>>(listOf())
     var characterList = mutableStateOf<List<CharResult>>(listOf())
     var loadError = mutableStateOf("")
 
@@ -51,6 +50,14 @@ class ListViewModel @Inject constructor(
         fetchCharacters()
     }
 
+    fun onSearchTextChange(text: String) {
+        _searchText.value = text
+    }
+
+    fun getCharacter(id: String): CharResult? {
+        return characterList.value.find { it.id.toString() == id }
+    }
+
     private fun fetchCharacters() {
         _isLoading.value = true
         viewModelScope.launch {
@@ -71,14 +78,5 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    fun onSearchTextChange(text: String) {
-        _searchText.value = text
-    }
-}
 
-data class ListEntry (
-    val name: String){
-    fun doesMatchSearchQuery(query: String): Boolean {
-        return name.lowercase().contains(query.lowercase())
-    }
 }
