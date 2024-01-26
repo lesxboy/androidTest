@@ -27,7 +27,7 @@ class ListViewModel @Inject constructor(
     val isLoading = _isLoading.asStateFlow()
 
     private val _characters = MutableStateFlow(characterList.value)
-    val persons = searchText
+    val characters = searchText
         .debounce(500L)
         .onEach { _isLoading.update { true } }
         .combine(_characters) { text, entry ->

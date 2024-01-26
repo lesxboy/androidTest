@@ -10,20 +10,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ListScreen(
-    viewModel: ListViewModel = hiltViewModel()
-) {
+fun ListScreen() {
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) {
         val viewModel = viewModel<ListViewModel>()
         val searchText by viewModel.searchText.collectAsState()
-        val persons by viewModel.persons.collectAsState()
+        val characters by viewModel.characters.collectAsState()
         val isLoading by viewModel.isLoading.collectAsState()
         Column(
             modifier = Modifier
@@ -49,9 +46,9 @@ fun ListScreen(
                         .fillMaxWidth()
                         .weight(1f)
                 ) {
-                    items(persons) { person ->
+                    items(characters) { character ->
                         Text(
-                            text = person.name,
+                            text = character.name,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp)
