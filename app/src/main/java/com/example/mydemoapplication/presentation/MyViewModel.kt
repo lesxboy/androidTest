@@ -10,7 +10,6 @@ import javax.inject.Inject
 class MyViewModel @Inject constructor(
     repository: Lazy<MyRepository>
 ): ViewModel() {
-
     init {
         repository.get()
     }
