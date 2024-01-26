@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
-    private val repository: Lazy<MyRepository>
+    repository: Lazy<MyRepository>
 ): ViewModel() {
 
     init {

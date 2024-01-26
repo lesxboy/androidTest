@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,45 +32,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyDemoApplicationTheme {
-                val viewModel = viewModel<ListViewModel>()
-                val searchText by viewModel.searchText.collectAsState()
-                val persons by viewModel.persons.collectAsState()
-                val isLoading by viewModel.isLoading.collectAsState()
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    TextField(
-                        value = searchText,
-                        onValueChange = viewModel::onSearchTextChange,
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text(text = "Search") }
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    if(isLoading) {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.Center)
-                            )
-                        }
-                    } else {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
-                        ) {
-                            items(persons) { person ->
-                                Text(
-                                    text = person.name,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 16.dp)
-                                )
-                            }
-                        }
-                    }
-                }
+                ListScreen()
             }
         }
     }
