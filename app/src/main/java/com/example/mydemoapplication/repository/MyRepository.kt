@@ -10,7 +10,6 @@ import javax.inject.Inject
 class MyRepository @Inject constructor(
     private val api:MyApi
 ) {
-
     suspend fun getCharacterList(): Resource<Characters>{
         val response = try {
             api.fetchCharters()
