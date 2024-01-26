@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.mydemoapplication.data.remote.respones.CharResult
 import com.example.mydemoapplication.navigation.NavigationItem
 
 @Composable
@@ -52,7 +53,8 @@ fun ListScreen(navController: NavController) {
                         .weight(1f)
                 ) {
                     items(characters) { character ->
-                        CharacterRow(character = character, onItemClick = { row ->
+                        CharacterRow(character = character, onItemClick = { charResult ->
+                            println(charResult.toString())
                             navController.navigate(NavigationItem.Detail.route)
                         })
                     }
@@ -63,7 +65,7 @@ fun ListScreen(navController: NavController) {
 }
 
 @Composable
-fun CharacterRow(character: ListEntry, onItemClick: (ListEntry) -> Unit) {
+fun CharacterRow(character: CharResult, onItemClick: (CharResult) -> Unit) {
     Box(
         modifier = Modifier
             .clickable { onItemClick(character) }

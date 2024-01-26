@@ -19,6 +19,11 @@ fun DetailScreen(navController: NavController) {
                 .padding(16.dp)
         ) {
             println("ddd")
+            Text(text = "qwe")
+            Text(text = "Seaqwerch")
+            Text(text = "qwe")
+            Text(text = "qwe")
+            Text(text = "qwe")
         }
     }
 }

@@ -13,4 +13,8 @@ data class CharResult(
     val status: String,
     val type: String,
     val url: String
-)
+){
+    fun doesMatchSearchQuery(query: String): Boolean {
+        return name.lowercase().contains(query.lowercase())
+    }
+}

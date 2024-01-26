@@ -2,6 +2,7 @@ package com.example.mydemoapplication.screens.mylist
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mydemoapplication.data.remote.respones.CharResult
 import com.example.mydemoapplication.repository.MyRepository
 import com.example.mydemoapplication.util.Resource
 
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class ListViewModel @Inject constructor(
     private val repository: MyRepository,
 ) : ViewModel() {
-    var characterList = mutableStateOf<List<ListEntry>>(listOf())
+    //var characterList = mutableStateOf<List<ListEntry>>(listOf())
+    var characterList = mutableStateOf<List<CharResult>>(listOf())
     var loadError = mutableStateOf("")
 
     private val _searchText = MutableStateFlow("")
@@ -54,9 +56,8 @@ class ListViewModel @Inject constructor(
         viewModelScope.launch {
             when(val result = repository.getCharacterList()) {
                 is Resource.Success -> {
-                    val entries = result.data?.results?.mapIndexed { index, entry ->
-                        ListEntry(entry.name)
-                    }
+                    val entries = result.data?.results
+
                     if (entries != null) {
                         characterList.value = entries
                     }
