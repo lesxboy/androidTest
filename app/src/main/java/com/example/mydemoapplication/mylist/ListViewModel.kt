@@ -81,8 +81,6 @@ class ListViewModel @Inject constructor(
 data class ListEntry(
     val name: String){
     fun doesMatchSearchQuery(query: String): Boolean {
-        return name.toString().any {
-            it.lowercase().contains(query.lowercase(), ignoreCase = true)
-        }
+        return name.lowercase().contains(query.lowercase())
     }
 }
