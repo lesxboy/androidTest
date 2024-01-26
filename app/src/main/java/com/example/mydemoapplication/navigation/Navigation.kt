@@ -5,15 +5,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mydemoapplication.mylist.ListScreen
+import com.example.mydemoapplication.screens.detail.DetailScreen
+import com.example.mydemoapplication.screens.mylist.ListScreen
 
-enum class Screen {
+enum class Screens {
     LIST,
     DETAIL,
 }
 sealed class NavigationItem(val route: String) {
-    object List : NavigationItem(Screen.LIST.name)
-    object Detail : NavigationItem(Screen.DETAIL.name)
+    object List : NavigationItem(Screens.LIST.name)
+    object Detail : NavigationItem(Screens.DETAIL.name)
 }
 
 @Composable
@@ -31,19 +32,7 @@ fun AppNavHost(
             ListScreen(navController)
         }
         composable(NavigationItem.Detail.route) {
-            ListScreen(navController)
+            DetailScreen(navController)
         }
-    }
-}
-
-object NavigationObj {
-    private lateinit var navController: NavHostController
-
-    fun setController(controller: NavHostController) {
-        navController = controller
-    }
-
-    fun getController(): NavHostController {
-        return navController
     }
 }

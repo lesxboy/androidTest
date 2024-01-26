@@ -1,4 +1,4 @@
-package com.example.mydemoapplication.mylist
+package com.example.mydemoapplication.screens.mylist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.mydemoapplication.navigation.NavigationItem
 
 @Composable
 fun ListScreen(navController: NavController) {
@@ -22,7 +23,7 @@ fun ListScreen(navController: NavController) {
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
     ) {
-        val viewModel = viewModel<ListViewModel>()
+        val viewModel = hiltViewModel<ListViewModel>()
         val searchText by viewModel.searchText.collectAsState()
         val characters by viewModel.characters.collectAsState()
         val isLoading by viewModel.isLoading.collectAsState()
@@ -51,9 +52,8 @@ fun ListScreen(navController: NavController) {
                         .weight(1f)
                 ) {
                     items(characters) { character ->
-                        CharacterRow(character = character, onItemClick = { test ->
-                            println(test.name)
-                            // Handle item click
+                        CharacterRow(character = character, onItemClick = { row ->
+                            navController.navigate(NavigationItem.Detail.route)
                         })
                     }
                 }

@@ -1,8 +1,7 @@
-package com.example.mydemoapplication.mylist
+package com.example.mydemoapplication.screens.mylist
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mydemoapplication.navigation.NavigationObj
 import com.example.mydemoapplication.repository.MyRepository
 import com.example.mydemoapplication.util.Resource
 
@@ -14,7 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel @Inject constructor(
     private val repository: MyRepository,
-    private val navigator: NavigationObj
 ) : ViewModel() {
     var characterList = mutableStateOf<List<ListEntry>>(listOf())
     var loadError = mutableStateOf("")
@@ -47,10 +45,6 @@ class ListViewModel @Inject constructor(
             _characters.value
         )
 
-    fun onSearchTextChange(text: String) {
-        _searchText.value = text
-    }
-
     init {
         fetchCharacters()
     }
@@ -74,6 +68,10 @@ class ListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onSearchTextChange(text: String) {
+        _searchText.value = text
     }
 }
 
