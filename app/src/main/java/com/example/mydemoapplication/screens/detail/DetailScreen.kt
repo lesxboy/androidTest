@@ -36,7 +36,7 @@ fun DetailScreen(navController: NavController, id: String) {
                             IconButton(onClick = { navController.navigateUp() }) {
                                 Icon(
                                     imageVector = Icons.Filled.ArrowBack,
-                                    contentDescription = "CHAR INFO"
+                                    contentDescription = "Character Information"
                                 )
                             }
                         }
