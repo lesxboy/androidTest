@@ -82,11 +82,11 @@ class ListViewModel @Inject constructor(
     }
 
     private fun updateSort(sortType: SortType) {
-        var sortList: List<CharResult> = _characters.value
+        val sortList: List<CharResult> = _characters.value
         when (sortType) {
-           SortType.SPECIES ->_characters.value = sortList?.sortedBy { myObject -> myObject.species }
-           SortType.NAME ->  _characters.value = sortList?.sortedBy { myObject -> myObject.name }
-           SortType.STATUS -> _characters.value = sortList?.sortedBy { myObject -> myObject.status }
+           SortType.SPECIES ->_characters.value = sortList.sortedBy { myObject -> myObject.species }
+           SortType.NAME ->  _characters.value = sortList.sortedBy { myObject -> myObject.name }
+           SortType.STATUS -> _characters.value = sortList.sortedBy { myObject -> myObject.status }
        }
     }
 
@@ -105,7 +105,11 @@ class ListViewModel @Inject constructor(
                     _isLoading.value = false
                 }
                 is Resource.Error -> {
+                    //todo show error message
                     loadError.value = result.message!!
+                    _isLoading.value = false
+                }
+                else -> {
                     _isLoading.value = false
                 }
             }

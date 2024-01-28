@@ -13,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
@@ -29,11 +30,7 @@ fun DetailScreen(navController: NavController, id: String) {
         val viewModel: ListViewModel = hiltViewModel()
         val character = viewModel.getCharacter(id)
 
-        Scaffold( topBar = {  TopAppBar( title = {
-                        if (character != null) {
-                            Text(text = character.name)
-                        }
-                    },
+        Scaffold( topBar = {  TopAppBar( title = { if (character != null) { Text(text = character.name) } },
                     navigationIcon = if (navController.previousBackStackEntry != null) {
                         {
                             IconButton(onClick = { navController.navigateUp() }) {
@@ -52,7 +49,7 @@ fun DetailScreen(navController: NavController, id: String) {
                         Column(
                    modifier = Modifier
                        .fillMaxSize()
-                       .padding(16.dp),
+                       .padding(20.dp),
                    horizontalAlignment = Alignment.CenterHorizontally
 
                ) { if (character != null) {
@@ -64,9 +61,10 @@ fun DetailScreen(navController: NavController, id: String) {
                                    .clip(CircleShape)
                                    .border(2.dp, Color.Gray, CircleShape)
                            )
-                           Text(text = character.name)
-                           Text(text = character.gender)
-                           Text(text = character.status)
+                            Text(text = "Name: ${character.name}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
+                            Text(text = "Gender: ${character.gender}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
+                            Text(text = "Status: ${character.status}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
+                            Text(text = "Origin: ${character.origin.name}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
                     }
                 }
             }

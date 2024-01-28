@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mydemoapplication.data.remote.respones.CharResult
+import javax.annotation.meta.When
 
 @Composable
 fun ListScreen(navController: NavController) {
