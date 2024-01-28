@@ -31,7 +31,7 @@ class ListViewModel @Inject constructor(
     var loadError = mutableStateOf("")
     val searchText = MutableStateFlow(_uiState.value.searchText)
     private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+   // val isLoading = _isLoading.asStateFlow()
 
     val _filteredList = searchText
         .debounce(500L)
@@ -53,10 +53,11 @@ class ListViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             _characters.value
         )
-    val uiState = combine(_uiState, _sortType, _filteredList) { state, sortType, filteredList ->
+    val uiState = combine(_uiState, _sortType, _filteredList, _isLoading) { state, sortType, filteredList, isLoading ->
         state.copy(
             characterList = filteredList,
-            sortType = sortType
+            sortType = sortType,
+            isLoading = isLoading
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 

@@ -35,9 +35,7 @@ fun ListScreen(navController: NavController) {
             }
             val state by viewModel.uiState.collectAsState()
             val onEvent = viewModel::onEvent
-            val selectedSortType = state.sortType
             val searchText by viewModel.searchText.collectAsState()
-            val isLoading by viewModel.isLoading.collectAsState()
 
             Column(
                 modifier = Modifier
@@ -52,7 +50,7 @@ fun ListScreen(navController: NavController) {
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-                if(isLoading) {
+                if(state.isLoading) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         CircularProgressIndicator(
                             modifier = Modifier.align(Alignment.Center)
@@ -80,7 +78,7 @@ fun ListScreen(navController: NavController) {
                                         verticalAlignment = CenterVertically
                                     ) {
                                         RadioButton(
-                                            selected = selectedSortType == sortType,
+                                            selected = state.sortType == sortType,
                                             onClick = {
                                                 onEvent(ListEvent.SortCharacters(sortType))
                                             }
