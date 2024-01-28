@@ -77,7 +77,7 @@ class ListViewModel @Inject constructor(
        searchText.value = text
     }
 
-    fun getCharacterById(id: String): CharResult? {
+    fun getCharacter(id: String): CharResult? {
         return _characters.value.find { it.id.toString() == id }
     }
 
