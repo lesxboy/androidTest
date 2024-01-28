@@ -15,27 +15,32 @@ import javax.inject.Inject
 class ListViewModel @Inject constructor(
     private val repository: MyRepository,
 ) : ViewModel() {
-    var characterList = mutableStateOf<List<CharResult>>(listOf())
-    var loadError = mutableStateOf("")
 
+    data class UiState(
+        val loadError: String = "",
+        val isLoading: Boolean = false,
+        var characterList: List<CharResult> = listOf(),
+        val sortType: SortType = SortType.NAME,
+        val searchText: String = "",
+    )
+    private var _characterList = mutableStateOf<List<CharResult>>(listOf())
+    private val _uiState = MutableStateFlow(UiState())
     private val _sortType = MutableStateFlow(SortType.NAME)
-    val sortType = _sortType.asStateFlow()
+    private val _characters = MutableStateFlow(_characterList.value)
 
-    private val _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
-
+    var loadError = mutableStateOf("")
+    val searchText = MutableStateFlow(_uiState.value.searchText)
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
-    private val _characters = MutableStateFlow(characterList.value)
-    val characters = searchText
+    val _filteredList = searchText
         .debounce(500L)
         .onEach { _isLoading.update { true } }
         .combine(_characters) { text, entry ->
             if(text.isBlank()) {
-                characterList.value
+                _characters.value
             } else {
-                characterList.value.filter {
+                _characters.value.filter {
                     it.doesMatchSearchQuery(text)
                 }
             }
@@ -48,21 +53,41 @@ class ListViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             _characters.value
         )
+    val uiState = combine(_uiState, _sortType, _filteredList) { state, sortType, filteredList ->
+        state.copy(
+            characterList = filteredList,
+            sortType = sortType
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
     init {
         fetchCharacters()
     }
 
+    fun onEvent(event: ListEvent) {
+        when(event) {
+            is ListEvent.SortCharacters -> {
+                _sortType.value = event.sortType
+                updateSort(event.sortType)
+            }
+        }
+    }
+
     fun onSearchTextChange(text: String) {
-        _searchText.value = text
+       searchText.value = text
     }
 
     fun getCharacter(id: String): CharResult? {
-        return characterList.value.find { it.id.toString() == id }
+        return _characters.value.find { it.id.toString() == id }
     }
 
-    fun setSortType(sortType: SortType) {
-        _sortType.value = sortType
+    private fun updateSort(sortType: SortType) {
+        var sortList: List<CharResult> = _characters.value
+        when (sortType) {
+           SortType.SPECIES ->_characters.value = sortList?.sortedBy { myObject -> myObject.species }
+           SortType.NAME ->  _characters.value = sortList?.sortedBy { myObject -> myObject.name }
+           SortType.STATUS -> _characters.value = sortList?.sortedBy { myObject -> myObject.status }
+       }
     }
 
     private fun fetchCharacters() {
@@ -73,8 +98,10 @@ class ListViewModel @Inject constructor(
                     val entries = result.data?.results
 
                     if (entries != null) {
-                        characterList.value = entries
+                        _characters.value = entries
                     }
+
+                    updateSort(_sortType.value)
                     _isLoading.value = false
                 }
                 is Resource.Error -> {
@@ -84,6 +111,4 @@ class ListViewModel @Inject constructor(
             }
         }
     }
-
-
 }

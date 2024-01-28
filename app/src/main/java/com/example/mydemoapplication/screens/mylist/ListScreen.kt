@@ -33,11 +33,11 @@ fun ListScreen(navController: NavController) {
             fun navigateToDetailScreen(char: CharResult) {
                 navController.navigate("DETAIL/${char.id}")
             }
-
+            val state by viewModel.uiState.collectAsState()
+            val onEvent = viewModel::onEvent
+            val selectedSortType = state.sortType
             val searchText by viewModel.searchText.collectAsState()
-            val characters by viewModel.characters.collectAsState()
             val isLoading by viewModel.isLoading.collectAsState()
-            val selectedSortType by viewModel.sortType.collectAsState()
 
             Column(
                 modifier = Modifier
@@ -71,19 +71,18 @@ fun ListScreen(navController: NavController) {
                                     .horizontalScroll(rememberScrollState()),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-
                                 SortType.values().forEach { sortType ->
                                     Row(
                                         modifier = Modifier
                                             .clickable {
-                                                //onEvent(ContactEvent.SortContacts(sortType))
+                                                onEvent(ListEvent.SortCharacters(sortType))
                                             },
                                         verticalAlignment = CenterVertically
                                     ) {
                                         RadioButton(
                                             selected = selectedSortType == sortType,
                                             onClick = {
-                                                viewModel.setSortType(sortType)
+                                                onEvent(ListEvent.SortCharacters(sortType))
                                             }
                                         )
                                         Text(text = sortType.name)
@@ -92,7 +91,7 @@ fun ListScreen(navController: NavController) {
                             }
                         }
 
-                        items(characters) { character ->
+                        items(state.characterList) { character ->
                             CharacterRow(character = character) { charResult ->
                                 navigateToDetailScreen(charResult)
                             }
