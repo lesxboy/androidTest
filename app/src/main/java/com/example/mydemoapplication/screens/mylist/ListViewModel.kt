@@ -29,7 +29,7 @@ class ListViewModel @Inject constructor(
     private val _characters = MutableStateFlow(_characterList.value)
     private val _isLoading = MutableStateFlow(false)
 
-    var loadError = mutableStateOf("")
+    var _loadError = MutableStateFlow("")
     val searchText = MutableStateFlow(_uiState.value.searchText)
 
     val _filteredList = searchText
@@ -52,11 +52,12 @@ class ListViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             _characters.value
         )
-    val uiState = combine(_uiState, _sortType, _filteredList, _isLoading) { state, sortType, filteredList, isLoading ->
+    val uiState = combine(_uiState, _sortType, _filteredList, _isLoading, _loadError) { state, sortType, filteredList, isLoading, loadError ->
         state.copy(
             characterList = filteredList,
             sortType = sortType,
-            isLoading = isLoading
+            isLoading = isLoading,
+            loadError = loadError
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
@@ -106,7 +107,7 @@ class ListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     //todo show error message
-                    loadError.value = result.message!!
+                    _loadError.value = result.message!!
                     _isLoading.value = false
                 }
                 else -> {
