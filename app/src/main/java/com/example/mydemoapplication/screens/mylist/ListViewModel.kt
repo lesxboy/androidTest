@@ -27,11 +27,10 @@ class ListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UiState())
     private val _sortType = MutableStateFlow(SortType.NAME)
     private val _characters = MutableStateFlow(_characterList.value)
+    private val _isLoading = MutableStateFlow(false)
 
     var loadError = mutableStateOf("")
     val searchText = MutableStateFlow(_uiState.value.searchText)
-    private val _isLoading = MutableStateFlow(false)
-   // val isLoading = _isLoading.asStateFlow()
 
     val _filteredList = searchText
         .debounce(500L)
