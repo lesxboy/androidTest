@@ -7,7 +7,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.mydemoapplication.data.remote.respones.CharResult
 import com.example.mydemoapplication.screens.detail.DetailScreen
 import com.example.mydemoapplication.screens.mylist.ListScreen
 import com.google.gson.Gson

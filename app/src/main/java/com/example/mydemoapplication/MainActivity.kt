@@ -18,6 +18,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyDemoApplicationTheme {
                 AppNavHost(navController = rememberNavController())
+
+                /*val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = "listScreen",
+                ) {
+                    composable("listScreen") {
+                        ListScreen(navController)
+                    }
+                    composable("detailScreen") {
+                        ListScreen(navController)
+                    }
+                }*/
             }
         }
     }

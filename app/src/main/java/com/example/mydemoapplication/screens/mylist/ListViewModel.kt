@@ -18,6 +18,9 @@ class ListViewModel @Inject constructor(
     var characterList = mutableStateOf<List<CharResult>>(listOf())
     var loadError = mutableStateOf("")
 
+    private val _sortType = MutableStateFlow(SortType.NAME)
+    val sortType = _sortType.asStateFlow()
+
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
@@ -56,6 +59,10 @@ class ListViewModel @Inject constructor(
 
     fun getCharacter(id: String): CharResult? {
         return characterList.value.find { it.id.toString() == id }
+    }
+
+    fun setSortType(sortType: SortType) {
+        _sortType.value = sortType
     }
 
     private fun fetchCharacters() {
