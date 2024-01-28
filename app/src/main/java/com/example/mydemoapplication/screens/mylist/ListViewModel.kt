@@ -25,17 +25,16 @@ class ListViewModel @Inject constructor(
     )
     private var _characterList = mutableStateOf<List<CharResult>>(listOf())
     private val _uiState = MutableStateFlow(UiState())
-    private val _sortType = MutableStateFlow(SortType.NAME)
+    private val _sortType = MutableStateFlow(_uiState.value.sortType)
     private val _characters = MutableStateFlow(_characterList.value)
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(_uiState.value.isLoading)
 
-    var _loadError = MutableStateFlow("")
+    var _loadError = MutableStateFlow(_uiState.value.loadError)
     val searchText = MutableStateFlow(_uiState.value.searchText)
-
     val _filteredList = searchText
         .debounce(500L)
         .onEach { _isLoading.update { true } }
-        .combine(_characters) { text, entry ->
+        .combine(_characters) { text, _ ->
             if(text.isBlank()) {
                 _characters.value
             } else {

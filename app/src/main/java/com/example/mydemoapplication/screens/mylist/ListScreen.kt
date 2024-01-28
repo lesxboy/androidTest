@@ -57,38 +57,35 @@ fun ListScreen(navController: NavController) {
                         )
                     }
                 } else {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState()),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        SortType.values().forEach { sortType ->
+                            Row(
+                                modifier = Modifier
+                                    .clickable {
+                                        onEvent(ListEvent.SortCharacters(sortType))
+                                    },
+                                verticalAlignment = CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = state.sortType == sortType,
+                                    onClick = {
+                                        onEvent(ListEvent.SortCharacters(sortType))
+                                    }
+                                )
+                                Text(text = sortType.name)
+                            }
+                        }
+                    }
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)
                     ) {
-                        item {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .horizontalScroll(rememberScrollState()),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                SortType.values().forEach { sortType ->
-                                    Row(
-                                        modifier = Modifier
-                                            .clickable {
-                                                onEvent(ListEvent.SortCharacters(sortType))
-                                            },
-                                        verticalAlignment = CenterVertically
-                                    ) {
-                                        RadioButton(
-                                            selected = state.sortType == sortType,
-                                            onClick = {
-                                                onEvent(ListEvent.SortCharacters(sortType))
-                                            }
-                                        )
-                                        Text(text = sortType.name)
-                                    }
-                                }
-                            }
-                        }
-
                         items(state.characterList) { character ->
                             CharacterRow(character = character) { charResult ->
                                 navigateToDetailScreen(charResult)
