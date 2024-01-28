@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ListViewModel @Inject constructor(
     private val repository: MyRepository,
 ) : ViewModel() {
-
+    
     data class UiState(
         val loadError: String = "",
         val isLoading: Boolean = false,
@@ -23,8 +23,9 @@ class ListViewModel @Inject constructor(
         val sortType: SortType = SortType.NAME,
         val searchText: String = "",
     )
-    private var _characterList = mutableStateOf<List<CharResult>>(listOf())
+
     private val _uiState = MutableStateFlow(UiState())
+    private var _characterList = mutableStateOf(_uiState.value.characterList)
     private val _sortType = MutableStateFlow(_uiState.value.sortType)
     private val _characters = MutableStateFlow(_characterList.value)
     private val _isLoading = MutableStateFlow(_uiState.value.isLoading)
