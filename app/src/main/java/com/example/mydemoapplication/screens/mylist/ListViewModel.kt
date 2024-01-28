@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ListViewModel @Inject constructor(
     private val repository: MyRepository,
 ) : ViewModel() {
-    
+
     data class UiState(
         val loadError: String = "",
         val isLoading: Boolean = false,
@@ -68,7 +68,6 @@ class ListViewModel @Inject constructor(
     fun onEvent(event: ListEvent) {
         when(event) {
             is ListEvent.SortCharacters -> {
-                _sortType.value = event.sortType
                 updateSort(event.sortType)
             }
         }
@@ -84,6 +83,8 @@ class ListViewModel @Inject constructor(
 
     private fun updateSort(sortType: SortType) {
         val sortList: List<CharResult> = _characters.value
+        _sortType.value = sortType
+        
         when (sortType) {
            SortType.SPECIES ->_characters.value = sortList.sortedBy { myObject -> myObject.species }
            SortType.NAME ->  _characters.value = sortList.sortedBy { myObject -> myObject.name }
