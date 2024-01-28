@@ -34,10 +34,7 @@ fun DetailScreen(navController: NavController, id: String) {
                     navigationIcon = if (navController.previousBackStackEntry != null) {
                         {
                             IconButton(onClick = { navController.navigateUp() }) {
-                                Icon(
-                                    imageVector = Icons.Filled.ArrowBack,
-                                    contentDescription = "Character Information"
-                                )
+                                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Character Image")
                             }
                         }
                     } else {
