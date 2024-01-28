@@ -28,7 +28,7 @@ fun DetailScreen(navController: NavController, id: String) {
         modifier = Modifier.fillMaxSize()
     ) {
         val viewModel: ListViewModel = hiltViewModel()
-        val character = viewModel.getCharacter(id)
+        val character = viewModel.getCharacterById(id)
 
         Scaffold( topBar = {  TopAppBar( title = { if (character != null) { Text(text = character.name) } },
                     navigationIcon = if (navController.previousBackStackEntry != null) {
