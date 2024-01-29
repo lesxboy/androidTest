@@ -22,13 +22,10 @@ class MyRepository @Inject constructor(
                 }
                 is HttpException -> {
                     Resource.Error("HttpException error ${e.localizedMessage} ")
-                }
-                else -> { // Note the block
+                } else -> { // Note the block
                     Resource.Error("An error ${e.localizedMessage} ")
                 }
             }
-
-            return Resource.Error("An error ${e.localizedMessage} ")
         }
         return Resource.Success(response)
     }
