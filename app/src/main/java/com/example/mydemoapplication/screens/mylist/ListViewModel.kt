@@ -9,6 +9,7 @@ import com.example.mydemoapplication.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,7 +79,8 @@ class ListViewModel @Inject constructor(
     }
 
     fun getCharacter(id: String): CharResult? {
-        return _characters.value.find { it.id.toString() == id }
+        var character = _characters.value.find { it.id.toString() == id }
+        return character ?: throw IOException("Get Character failed")
     }
 
     private fun updateSort(sortType: SortType) {

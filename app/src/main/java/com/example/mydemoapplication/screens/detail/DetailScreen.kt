@@ -28,7 +28,11 @@ fun DetailScreen(navController: NavController, id: String) {
         modifier = Modifier.fillMaxSize()
     ) {
         val viewModel: ListViewModel = hiltViewModel()
-        val character = viewModel.getCharacter(id)
+        val character = try {
+            viewModel.getCharacter(id)
+        } catch (error: Throwable) {
+            null
+        }
 
         Scaffold( topBar = {  TopAppBar( title = { if (character != null) { Text(text = character.name) } },
                     navigationIcon = if (navController.previousBackStackEntry != null) {
@@ -62,6 +66,8 @@ fun DetailScreen(navController: NavController, id: String) {
                             Text(text = "Gender: ${character.gender}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
                             Text(text = "Status: ${character.status}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
                             Text(text = "Origin: ${character.origin.name}", fontSize = 18.sp, fontWeight = FontWeight.Normal)
+                    }else {
+                        Text(text = "Character could not loaded", fontSize = 18.sp, fontWeight = FontWeight.Normal)
                     }
                 }
             }
