@@ -79,8 +79,7 @@ class ListViewModel @Inject constructor(
     }
 
     fun getCharacter(id: String): CharResult? {
-        var character = _characters.value.find { it.id.toString() == id }
-        return character ?: throw IOException("Get Character failed")
+        return _characters.value.find { it.id.toString() == id } ?: throw IOException("Get Character failed")
     }
 
     private fun updateSort(sortType: SortType) {
